@@ -5,7 +5,7 @@ function todoRoutes(express, db) {
     const todoCntrl = require("./controller")(db);
     const todoResponse = require("./responses");
 
-    router.get("/todos", async (req, res) => {
+    router.get("/", async (req, res) => {
         const todos = await todoCntrl.get();
 
         if (todos === false) {
@@ -17,7 +17,7 @@ function todoRoutes(express, db) {
         }
     });
 
-    router.post("/todos", async (req, res) => {
+    router.post("/", async (req, res) => {
         const todoAdded = await todoCntrl.add(req.body);
 
         if (todoAdded === false) {
@@ -29,7 +29,7 @@ function todoRoutes(express, db) {
         }
     });
 
-    router.put("/todos/:id", async (req, res) => {
+    router.put("/:id", async (req, res) => {
         const todoUpdated = await todoCntrl.update(req.params.id, req.body);
 
         if (todoUpdated === false) {
@@ -41,7 +41,7 @@ function todoRoutes(express, db) {
         }
     });
 
-    router.delete("/todos/:id", async (req, res) => {
+    router.delete("/:id", async (req, res) => {
         const todoDeleted = await todoCntrl.delete(req.params.id);
 
         if (todoDeleted === false) {

@@ -11,7 +11,7 @@ function route(app, express, db) {
 
     //Create the base route
     const todoRoutes = require("./modules/todo/routes")(express, db);
-    app.use("/api", todoRoutes);
+    app.use("/api/todos", todoRoutes);
 }
 
 module.exports = route;

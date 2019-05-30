@@ -7,8 +7,8 @@ module.exports = function (db) {
         }
 
         add(data) {
-            try {
-                return new Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
+                try {
                     const todo = new this.model(data);
 
 
@@ -26,15 +26,15 @@ module.exports = function (db) {
                         console.log("waha");
                         resolve(false);
                     }
-                });
-            } catch (e) {
-                return -1;
-            }
+                } catch (e) {
+                    return -1;
+                }
+            });
         }
 
         get(id = null) {
-            try {
-                return new Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
+                try {
                     this.model.find({ status: { $ne: 3 } }, (err, r) => {
                         if (err !== null) {
                             resolve(false);
@@ -44,15 +44,15 @@ module.exports = function (db) {
                             resolve(r);
                         }
                     });
-                });
-            } catch (e) {
-                return -1;
-            }
+                } catch (e) {
+                    return resolve(-1);
+                }
+            });
         }
 
         update(id = null, data) {
-            try {
-                return new Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
+                try {
                     if (!id || !data) {
                         resolve(false);
                     } else {
@@ -64,15 +64,15 @@ module.exports = function (db) {
                             }
                         });
                     }
-                });
-            } catch (error) {
-                return -1;
-            }
+                } catch (error) {
+                    return -1;
+                }
+            });
         }
 
         delete(id = null) {
-            try {
-                return new Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
+                try {
                     if (!id) {
                         resolve(false);
                     } else {
@@ -84,10 +84,10 @@ module.exports = function (db) {
                             }
                         });
                     }
-                });
-            } catch (error) {
-                return -1;
-            }
+                } catch (error) {
+                    return -1;
+                }
+            });
         }
     }
 

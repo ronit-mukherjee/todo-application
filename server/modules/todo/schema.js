@@ -8,5 +8,19 @@ module.exports = db => {
         added_on: { type: Date, default: Date.now }
     });
 
+    todoSchema.statics.getAllNonDeletedTodos = function (callback) {
+        return this.find({ status: { $ne: 3 } }, callback);
+    };
+
+    todoSchema.statics.updateById = function (id, data, callback) {
+        return this.updateOne({ _id: id }, data, null, callback);
+    };
+
+    todoSchema.statics.deleteById = function (id, callback) {
+        return this.updateOne({ _id: id }, { status: 3 }, null, callback);
+    };
+
+
+
     return todoSchema;
 }

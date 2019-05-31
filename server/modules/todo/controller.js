@@ -23,7 +23,6 @@ module.exports = function (db) {
                             }
                         })
                     } else {
-                        console.log("waha");
                         resolve(false);
                     }
                 } catch (e) {
@@ -35,7 +34,7 @@ module.exports = function (db) {
         get(id = null) {
             return new Promise((resolve, reject) => {
                 try {
-                    this.model.find({ status: { $ne: 3 } }, (err, r) => {
+                    this.model.getAllNonDeletedTodos((err, r) => {
                         if (err !== null) {
                             resolve(false);
                         }
@@ -56,7 +55,7 @@ module.exports = function (db) {
                     if (!id || !data) {
                         resolve(false);
                     } else {
-                        this.model.updateOne({ _id: id }, { title: data.title, body: data.body }, null, (err, r) => {
+                        this.model.updateById(id, { title: data.title, body: data.body }, (err, r) => {
                             if (!err && r && r.nModified == 1) {
                                 resolve(true);
                             } else {
@@ -76,7 +75,7 @@ module.exports = function (db) {
                     if (!id) {
                         resolve(false);
                     } else {
-                        this.model.deleteOne({ _id: id }, (err, r) => {
+                        this.model.deleteById(id, (err, r) => {
                             if (!err && r) {
                                 resolve(true);
                             } else {

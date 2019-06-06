@@ -1,20 +1,4 @@
-const config = require("../../config");
-const responseStatusCodes = config.response_status_codes;
-
-class Response {
-    constructor(status = 1, message = "", data = null, statusCode = responseStatusCodes.get('success')) {
-        this.status = status;
-        this.statusCode = statusCode;
-
-        if (message && message !== "") {
-            this.message = message;
-        }
-
-        if (data && data !== null) {
-            this.data = data;
-        }
-    }
-}
+const Response = require('../utility/response');
 
 class TodoResponse {
     addSuccess(data) {
@@ -32,14 +16,14 @@ class TodoResponse {
     dbFailure() {
         return new Response(0,
             "DB Error: Operation failed.", null,
-            responseStatusCodes.get('db_query_failed')
+            'DB_QUERY_FAILURE'
         );
     }
 
     failure() {
         return new Response(0,
             "Server Error: Something went wrong.", null,
-            responseStatusCodes.get('failure')
+            'FAILURE'
         );
     }
 }

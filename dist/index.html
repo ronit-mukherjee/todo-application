@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./lib/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="./css/style.min.css" />
+</head>
+
+<body>
+    <h1>Todo List</h1>
+    <main id="todo-list" class="container">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Sr. No.</td>
+                    <th>Title</th>
+                    <th>Body</th>
+                    <th>Action</th>
+                </tr>
+                <tr id="add-todo-form" role="form" class="form">
+                    <td></td>
+                    <td><input type="text" class="form-control" name="title" maxlength="50" placeholder="Enter title" />
+                    </td>
+                    <td><input type="text" class="form-control" name="body" maxlength="100" placeholder="Enter body" />
+                    </td>
+                    <td><button class="btn btn-success action-add-todo w-100">ADD NEW</button></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="todo" data-id="1">
+                    <td class="todo-srno"></td>
+                    <td class="todo-title">Cute you are</td>
+                    <td class="todo-body">Body</td>
+                    <td class="todo-actions">
+                        <i class="fas fa-edit action-edit" title="Edit"></i>
+                        <i class="fas fa-check action-done" title="Mark Done"></i>
+                        <i class="fas fa-trash-alt action-delete" title="Delete"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <script src="./lib/jquery-3.4.1.min.js"></script>
+    <script src="./js/main-bundle.min.js"></script>
+</body>
+
+</html>

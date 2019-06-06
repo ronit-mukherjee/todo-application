@@ -3,7 +3,7 @@ const express = require("express");
 const db = require("./database");
 
 
-const port = process.env.NODE_PORT || 3000;
+const port = process.env.NODE_PORT || 3001;
 const server = express();
 
 require("./routes")(server, express, db);

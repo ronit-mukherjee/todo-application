@@ -32,7 +32,8 @@ h1 {
   height: 50vh;
   padding: 30px;
   overflow-y: auto;
-  counter-reset: srno; }
+  counter-reset: srno;
+  position: relative; }
   #todo-list table {
     width: 100%;
     text-align: center;
@@ -63,4 +64,16 @@ h1 {
       transition: opacity 500ms ease-in-out; }
       #todo-list .todo .todo-actions i[class*="action"]:hover {
         opacity: 1; }
+  #todo-list .loader-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8); }
+  #todo-list.loading .loader-container {
+    display: flex; }
 

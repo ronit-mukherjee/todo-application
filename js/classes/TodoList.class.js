@@ -16,7 +16,7 @@ class TodoList {
         if (Array.isArray(todo)) {
             this._todos = todo;
         } else {
-            this._todos.push(todo);
+            this._todos.unshift(todo);
         }
     }
 
@@ -29,12 +29,11 @@ class TodoList {
         return new Promise(
             (resolve, reject) => {
                 if (todoId && data) {
-                    const index = this.todos.findIndex(element => element.id == todoId);
+                    const index = this.todos.findIndex(element => element.ref_id == todoId);
 
                     if (index >= 0) {
                         const todo = this.todos[index];
                         const oldTodo = { ...todo };
-                        console.log(oldTodo);
 
                         todo.title = data.title;
                         todo.body = data.body;
@@ -42,6 +41,7 @@ class TodoList {
 
                         axios.put(`${apiUrl}/${todoId}`, todo)
                             .then((r) => {
+                                r = r.data;
                                 if (r.status == 1 && r.statusCode == 100) {
                                     resolve(todo);
                                 } else {
@@ -80,15 +80,15 @@ class TodoList {
                             if (r.status == 1 && r.statusCode == 100) {
                                 resolve(r);
                             } else {
-                                reject(Error(r.message));
+                                reject([Error(r.message)]);
                             }
                         })
-                        .catch(error => reject(Error(error.message)));
+                        .catch(error => reject([Error(error.message)]));
                 } else {
-                    reject(Error("Todo can't be created"));
+                    reject([Error("Todo can't be created")]);
                 }
             } else {
-                reject(Error("Required data to create Todo is not received"));
+                reject([Error("Required data to create Todo is not received")]);
             }
         });
     }
@@ -108,22 +108,40 @@ class TodoList {
 
                     axios.delete(`${apiUrl}/${todoId}`)
                         .then((r) => {
+                            r = r.data;
                             if (r.status == 1 && r.statusCode == 100) {
                                 resolve(todoId);
                             } else {
-                                reject(Error(r.message));
+                                reject([Error(r.message)]);
                             }
                         })
-                        .catch(error => reject(Error(error.message)));
+                        .catch(error => reject([Error(error.message)]));
 
 
                 }
                 else {
-                    reject(Error("Todo with given id cannot be found"))
+                    reject([Error("Todo with given id cannot be found")])
                 }
             }
 
-            reject(Error("Todo id not received"));
+            reject([Error("Todo id not received")]);
+        });
+    }
+
+
+    fetchTodosFromServer() {
+        return new Promise((resolve, reject) => {
+            axios.get(`${apiUrl}`)
+                .then((r) => {
+                    r = r.data;
+                    if (r.status == 1 && r.statusCode == 100) {
+                        this.todos = r.data;
+                        resolve(r.data);
+                    } else {
+                        reject([Error(r.message)]);
+                    }
+                })
+                .catch(error => reject([Error(error.message)]));
         });
     }
 }

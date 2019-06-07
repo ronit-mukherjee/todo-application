@@ -9,6 +9,7 @@ module.exports = function (db) {
         add(data) {
             return new Promise((resolve, reject) => {
                 try {
+                    data.ref_id = data.id;
                     const todo = new this.model(data);
 
 

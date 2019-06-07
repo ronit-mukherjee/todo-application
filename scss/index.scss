@@ -32,6 +32,8 @@ h1{
     padding: 30px;
     overflow-y: auto;
     counter-reset: srno;
+    position: relative;
+    
 
     table{
         width: 100%;
@@ -79,6 +81,24 @@ h1{
             &:hover{
                 opacity: 1;
             }
+        }
+    }
+
+    .loader-container{
+        position: absolute;
+        top:0;
+        left:0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        background: rgba(255,255,255,0.8);
+    }
+
+    &.loading{
+        .loader-container{
+            display: flex;
         }
     }
 }

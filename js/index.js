@@ -25,7 +25,7 @@ function initAddTodo(parentSelector, selector) {
     function addTodo() {
         //Create data
         const data = {
-            id: Date.now(),
+            ref_id: Date.now(),
             title: $(`${parentSelector} [name='title']`).val().trim(),
             body: $(`${parentSelector} [name='body']`).val().trim()
         };
@@ -58,7 +58,7 @@ function initTodoDone(selector) {
         const todoId = $todoMainElem.data("id");
 
         const data = {
-            id: todoId,
+            ref_id: todoId,
             title: $(".todo-title", $todoMainElem).text().trim(),
             body: $(".todo-body", $todoMainElem).text().trim(),
             status: 2
@@ -76,13 +76,11 @@ function initTodoDone(selector) {
                 document.dispatchEvent(updatingTodoSuccess);
             })
             .catch(([error, oldTodo]) => {
-                setTimeout(() => {
-                    // Emmit event of update failure
-                    const updatingTodoFailure = new CustomEvent("updatingTodoFailure", { detail: { todo: oldTodo } })
-                    document.dispatchEvent(updatingTodoFailure);
+                // Emmit event of update failure
+                const updatingTodoFailure = new CustomEvent("updatingTodoFailure", { detail: { todo: oldTodo } })
+                document.dispatchEvent(updatingTodoFailure);
 
-                    console.error(error.message);
-                }, 1000);
+                console.error(error.message);
             });
     }
 
@@ -96,7 +94,7 @@ function initTodoDelete(selector) {
         const todoId = $todoMainElem.data("id");
 
         const data = {
-            id: todoId,
+            ref_id: todoId,
             title: $(".todo-title", $todoMainElem).text().trim(),
             body: $(".todo-body", $todoMainElem).text().trim(),
             status: 3
@@ -130,7 +128,6 @@ function initEventListeners(selector) {
         <td class="todo-title"></td>
         <td class="todo-body"></td>
         <td class="todo-actions">
-            <i class="fas fa-edit action-edit" title="Edit"></i>
             <i class="fas fa-check action-done" title="Mark Done"></i>
             <i class="fas fa-trash-alt action-delete" title="Delete"></i>
         </td>
@@ -186,7 +183,7 @@ function initEventListeners(selector) {
     }
     function onAddingTodoSuccess(e) {
         const todo = e.detail.todo;
-        const $todoElem = $(`.todo[data-id='${todo.id}']`);
+        const $todoElem = $(`.todo[data-id='${todo.ref_id}']`);
 
         $todoElem.removeClass("processing");
 
@@ -195,7 +192,7 @@ function initEventListeners(selector) {
     }
     function onAddingTodoFailure(e) {
         const todo = e.detail.todo;
-        const $todoElem = $(`.todo[data-id='${todo.id}']`);
+        const $todoElem = $(`.todo[data-id='${todo.ref_id}']`);
 
         $todoElem.removeClass("processing");
         $todoElem.fadeOut(function () { this.remove(); })
@@ -203,7 +200,7 @@ function initEventListeners(selector) {
     function onUpdatingTodo(e) {
         const todo = e.detail.todo;
 
-        const $todoElem = $(`.todo[data-id='${todo.id}']`);
+        const $todoElem = $(`.todo[data-id='${todo.ref_id}']`);
 
         $todoElem.addClass("processing");
 
@@ -216,20 +213,22 @@ function initEventListeners(selector) {
     }
     function onUpdatingTodoSuccess(e) {
         const todo = e.detail.todo;
-        const $todoElem = $(`.todo[data-id='${todo.id}']`);
+        const $todoElem = $(`.todo[data-id='${todo.ref_id}']`);
 
         $todoElem.removeClass("processing");
+        $todoElem.addClass("done");
     }
     function onUpdatingTodoFailure(e) {
         const todo = e.detail.todo;
-        console.log(todo);
-        const $todoElem = $(`.todo[data-id='${todo.id}']`);
+
+        const $todoElem = $(`.todo[data-id='${todo.ref_id}']`);
 
         $todoElem.removeClass("processing done");
     }
     function onDeletingTodoSuccess(e) {
         const todo = e.detail.todo;
-        const $todoElem = $(`.todo[data-id='${todo.id}']`);
+
+        const $todoElem = $(`.todo[data-id='${todo.ref_id}']`);
 
         $todoElem.fadeOut(function () { $(this).remove(); });
     }

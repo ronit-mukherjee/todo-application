@@ -9,7 +9,6 @@ module.exports = function (db) {
         add(data) {
             return new Promise((resolve, reject) => {
                 try {
-                    data.ref_id = data.id;
                     const todo = new this.model(data);
 
 
@@ -56,7 +55,7 @@ module.exports = function (db) {
                     if (!id || !data) {
                         resolve(false);
                     } else {
-                        this.model.updateById(id, { title: data.title, body: data.body }, (err, r) => {
+                        this.model.updateById(id, { title: data.title, body: data.body, status: data.status }, (err, r) => {
                             if (!err && r && r.nModified == 1) {
                                 resolve(true);
                             } else {

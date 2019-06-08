@@ -69,8 +69,9 @@ class TodoList {
     addTodo(data) {
         return new Promise((resolve, reject) => {
             if (data) {
+                console.log(data);
                 const todo = new Todo(data);
-
+                console.log(todo);
                 if (todo) {
                     this.todos = todo;
 
@@ -101,7 +102,7 @@ class TodoList {
     deleteTodo(todoId) {
         return new Promise((resolve, reject) => {
             if (todoId) {
-                const index = this.todos.findIndex(element => element.id == todoId);
+                const index = this.todos.findIndex(element => element.ref_id == todoId);
 
                 if (index >= 0) {
                     this.todos = this.todos.splice(index, 1);

@@ -2,7 +2,7 @@ module.exports = db => {
     const Schema = db.getSchema();
 
     const todoSchema = new Schema({
-        ref_id: { type: String, required: true, unique: true },
+        ref_id: { type: Number, required: true, unique: true },
         title: { type: String, required: true },
         body: { type: String, default: null },
         status: { type: Number, default: 1 }, //1: Open 2: Done 3: Deleted  
@@ -14,6 +14,7 @@ module.exports = db => {
     };
 
     todoSchema.statics.updateById = function (id, data, callback) {
+        console.log(id, data);
         return this.updateOne({ ref_id: id }, data, null, callback);
     };
 
